@@ -59,8 +59,8 @@ public class UsersService extends DatabaseService {
         );
     }
 
-    public long createUser(CreateUser user) {
-        return jdbi.withHandle(handle -> {
+    public User createUser(CreateUser user) {
+        long id = jdbi.withHandle(handle -> {
             handle.createUpdate(
                     "INSERT INTO users " +
                             "(username, email, first_name, last_name) " +
@@ -76,6 +76,8 @@ public class UsersService extends DatabaseService {
                     .mapTo(Long.class)
                     .one();
         });
+
+        return getById(id);
     }
 
     public User updateUser(long id, UpdateUser user) {

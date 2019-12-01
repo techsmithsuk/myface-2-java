@@ -45,9 +45,9 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView createUser(@ModelAttribute @Valid CreateUser user) {
-        long id = usersService.createUser(user);
-        return new RedirectView("/users/" + id);
+    public RedirectView createUser(@ModelAttribute @Valid CreateUser createUser) {
+        User user = usersService.createUser(createUser);
+        return new RedirectView("/users/" + user.getId());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
