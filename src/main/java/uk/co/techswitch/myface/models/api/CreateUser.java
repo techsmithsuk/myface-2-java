@@ -1,9 +1,17 @@
 package uk.co.techswitch.myface.models.api;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class CreateUser {
+    @NotBlank
     private String username;
+    @Email
+    @NotBlank
     private String email;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
 
     public String getUsername() {

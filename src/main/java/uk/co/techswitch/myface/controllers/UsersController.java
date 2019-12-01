@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.co.techswitch.myface.models.api.CreateUser;
 import uk.co.techswitch.myface.services.UsersService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/users")
 public class UsersController {
@@ -20,7 +22,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView createUser(@ModelAttribute CreateUser user) {
+    public ModelAndView createUser(@ModelAttribute @Valid CreateUser user) {
         usersService.createUser(user);
         return new ModelAndView("index");
     }
