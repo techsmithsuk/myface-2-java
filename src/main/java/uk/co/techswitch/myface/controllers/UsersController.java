@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import uk.co.techswitch.myface.models.api.CreateUser;
-import uk.co.techswitch.myface.models.api.UserFilter;
-import uk.co.techswitch.myface.models.api.UserModel;
-import uk.co.techswitch.myface.models.api.UserResultsPage;
+import org.springframework.web.servlet.view.RedirectView;
+import uk.co.techswitch.myface.models.api.*;
 import uk.co.techswitch.myface.models.database.User;
 import uk.co.techswitch.myface.services.UsersService;
 
@@ -46,9 +44,16 @@ public class UsersController {
         return new ModelAndView("users/details");
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public RedirectView updateUser(@PathVariable("id") long id, @ModelAttribute @Valid UpdateUser updateUser) {
+        User user = usersService.updateUser(id, updateUser);
+
+        return new RedirectView("/users/" + user.getId());
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView createUser(@ModelAttribute @Valid CreateUser user) {
-        usersService.createUser(user);
-        return new ModelAndView("index");
+    public RedirectView createUser(@ModelAttribute @Valid CreateUser user) {
+        long id = usersService.createUser(user);
+        return new RedirectView("/users/" + id);
     }
 }

@@ -2,6 +2,7 @@ package uk.co.techswitch.myface.services;
 
 import org.springframework.stereotype.Service;
 import uk.co.techswitch.myface.models.api.CreateUser;
+import uk.co.techswitch.myface.models.api.UpdateUser;
 import uk.co.techswitch.myface.models.api.UserFilter;
 import uk.co.techswitch.myface.models.database.User;
 
@@ -75,5 +76,24 @@ public class UsersService extends DatabaseService {
                     .mapTo(Long.class)
                     .one();
         });
+    }
+
+    public User updateUser(Long id, UpdateUser user) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "UPDATE users SET " +
+                                "username = :username " +
+                                "email = :email" +
+                                "first_name = :firstName" +
+                                "last_name = :lastName" +
+                                "WHERE id = :id")
+                        .bind("username", user.getUsername())
+                        .bind("email", user.getEmail())
+                        .bind("firstName", user.getFirstName())
+                        .bind("lastName", user.getLastName())
+                        .bind("id", id)
+                        .execute()
+        );
+        return getById(id);
     }
 }
