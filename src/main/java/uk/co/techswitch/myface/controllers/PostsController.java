@@ -54,4 +54,10 @@ public class PostsController extends DatabaseService {
         Post post = postsService.updatePost(id, updatePost);
         return new RedirectView("/posts/" + post.getId());
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public RedirectView deletePost(@PathVariable("id") long id) {
+        postsService.deletePost(id);
+        return new RedirectView("/posts");
+    }
 }
