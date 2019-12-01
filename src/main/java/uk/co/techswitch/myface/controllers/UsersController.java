@@ -3,11 +3,13 @@ package uk.co.techswitch.myface.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import uk.co.techswitch.myface.models.api.CreateUser;
 import uk.co.techswitch.myface.models.api.UserFilter;
+import uk.co.techswitch.myface.models.api.UserModel;
 import uk.co.techswitch.myface.models.api.UserResultsPage;
 import uk.co.techswitch.myface.models.database.User;
 import uk.co.techswitch.myface.services.UsersService;
@@ -33,6 +35,15 @@ public class UsersController {
         UserResultsPage resultsPage = new UserResultsPage(users, filter, numberMatchingSearch);
 
         return new ModelAndView("users/search");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView getUserDetails(@PathVariable("id") long id) {
+        User user = usersService.getById(id);
+
+        UserModel model = new UserModel(user);
+
+        return new ModelAndView("users/details");
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

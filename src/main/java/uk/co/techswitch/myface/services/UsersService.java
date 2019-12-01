@@ -49,6 +49,15 @@ public class UsersService extends DatabaseService {
         );
     }
 
+    public User getById(long id) {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM users WHERE id = :id")
+                        .bind("id", id)
+                        .mapToBean(User.class)
+                        .one()
+        );
+    }
+
     public long createUser(CreateUser user) {
         return jdbi.withHandle(handle -> {
             handle.createUpdate(
