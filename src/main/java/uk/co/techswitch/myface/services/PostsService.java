@@ -1,9 +1,11 @@
 package uk.co.techswitch.myface.services;
 
 import org.springframework.stereotype.Service;
+import uk.co.techswitch.myface.models.api.posts.CreatePost;
 import uk.co.techswitch.myface.models.api.posts.PostsFilter;
 import uk.co.techswitch.myface.models.database.Post;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,5 +55,27 @@ public class PostsService extends DatabaseService {
                         .mapToBean(Post.class)
                         .one()
         );
+    }
+
+    public Post createPost(CreatePost post) {
+        long id = jdbi.withHandle(handle -> {
+                    handle.createUpdate(
+                            "INSERT INTO posts " +
+                                    "(sender, message, image_url, timestamp) " +
+                                    "VALUES " +
+                                    "(:sender, :message, :imageUrl, :timestamp)")
+                            .bind("sender", post.getSender())
+                            .bind("message", post.getMessage())
+                            .bind("imageUrl", post.getImageUrl())
+                            .bind("timestamp", new Date())
+                            .execute();
+
+                    return handle.createQuery("SELECT LAST_INSERT_ID()")
+                            .mapTo(Long.class)
+                            .one();
+                }
+        );
+
+        return getById(id);
     }
 }

@@ -1,10 +1,13 @@
 package uk.co.techswitch.myface.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import uk.co.techswitch.myface.models.api.posts.CreatePost;
 import uk.co.techswitch.myface.models.api.posts.PostModel;
 import uk.co.techswitch.myface.models.api.posts.PostResultsPage;
 import uk.co.techswitch.myface.models.api.posts.PostsFilter;
@@ -12,6 +15,7 @@ import uk.co.techswitch.myface.models.database.Post;
 import uk.co.techswitch.myface.services.DatabaseService;
 import uk.co.techswitch.myface.services.PostsService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -40,5 +44,11 @@ public class PostsController extends DatabaseService {
         PostModel postModel = new PostModel(post);
 
         return new ModelAndView("posts/detail", "postModel", postModel);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public RedirectView createPost(@ModelAttribute @Valid CreatePost createPost) {
+        Post post = postsService.createPost(createPost);
+        return new RedirectView("/posts/" + post.getId());
     }
 }
