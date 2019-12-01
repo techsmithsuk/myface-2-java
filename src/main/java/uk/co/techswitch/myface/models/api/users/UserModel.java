@@ -9,6 +9,10 @@ public class UserModel {
         this.user = user;
     }
 
+    public long getId() {
+        return user.getId();
+    }
+
     public String getUsername() {
         return user.getUsername();
     }

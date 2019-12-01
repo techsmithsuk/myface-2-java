@@ -32,16 +32,16 @@ public class UsersController {
 
         UserResultsPage resultsPage = new UserResultsPage(users, filter, numberMatchingSearch);
 
-        return new ModelAndView("users/search");
+        return new ModelAndView("users/search", "results", resultsPage);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getUserDetails(@PathVariable("id") long id) {
         User user = usersService.getById(id);
 
-        UserModel model = new UserModel(user);
+        UserModel userModel = new UserModel(user);
 
-        return new ModelAndView("users/details");
+        return new ModelAndView("users/detail", "userModel", userModel);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

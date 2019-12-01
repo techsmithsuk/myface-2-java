@@ -4,7 +4,7 @@ create table posts
     sender      int unsigned not null,
     message     varchar(140) not null,
     image_url   varchar(1024),
-    timestamp   timestamp,
+    timestamp   datetime,
 
     primary key (id),
     foreign key (sender) references users(id)
