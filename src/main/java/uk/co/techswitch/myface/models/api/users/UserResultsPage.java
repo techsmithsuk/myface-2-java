@@ -1,5 +1,6 @@
-package uk.co.techswitch.myface.models.api;
+package uk.co.techswitch.myface.models.api.users;
 
+import uk.co.techswitch.myface.models.api.ResultsPage;
 import uk.co.techswitch.myface.models.database.User;
 
 import java.util.List;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import uk.co.techswitch.myface.models.api.*;
+import uk.co.techswitch.myface.models.api.users.*;
 import uk.co.techswitch.myface.models.database.User;
 import uk.co.techswitch.myface.services.UsersService;
 

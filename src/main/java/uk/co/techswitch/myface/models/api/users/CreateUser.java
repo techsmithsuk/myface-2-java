@@ -1,9 +1,9 @@
-package uk.co.techswitch.myface.models.api;
+package uk.co.techswitch.myface.models.api.users;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class UpdateUser {
+public class CreateUser {
     @NotBlank
     private String username;
     @Email

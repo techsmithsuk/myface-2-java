@@ -1,9 +1,9 @@
 package uk.co.techswitch.myface.services;
 
 import org.springframework.stereotype.Service;
-import uk.co.techswitch.myface.models.api.CreateUser;
-import uk.co.techswitch.myface.models.api.UpdateUser;
-import uk.co.techswitch.myface.models.api.UserFilter;
+import uk.co.techswitch.myface.models.api.users.CreateUser;
+import uk.co.techswitch.myface.models.api.users.UpdateUser;
+import uk.co.techswitch.myface.models.api.users.UserFilter;
 import uk.co.techswitch.myface.models.database.User;
 
 import java.util.List;
