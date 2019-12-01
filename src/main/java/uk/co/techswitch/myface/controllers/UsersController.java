@@ -26,7 +26,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView searchUsers(UserFilter filter) {
+    public ModelAndView searchUsers(UsersFilter filter) {
         List<User> users = usersService.searchUsers(filter);
         int numberMatchingSearch = usersService.countUsers(filter);
 

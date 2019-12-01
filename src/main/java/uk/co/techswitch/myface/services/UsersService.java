@@ -3,7 +3,7 @@ package uk.co.techswitch.myface.services;
 import org.springframework.stereotype.Service;
 import uk.co.techswitch.myface.models.api.users.CreateUser;
 import uk.co.techswitch.myface.models.api.users.UpdateUser;
-import uk.co.techswitch.myface.models.api.users.UserFilter;
+import uk.co.techswitch.myface.models.api.users.UsersFilter;
 import uk.co.techswitch.myface.models.database.User;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class UsersService extends DatabaseService {
 
-    public List<User> searchUsers(UserFilter filter) {
+    public List<User> searchUsers(UsersFilter filter) {
         return jdbi.withHandle(handle ->
                 handle.createQuery(
                         "SELECT * FROM users " +
@@ -32,7 +32,7 @@ public class UsersService extends DatabaseService {
         );
     }
 
-    public int countUsers(UserFilter filter) {
+    public int countUsers(UsersFilter filter) {
         return jdbi.withHandle(handle ->
                 handle.createQuery(
                         "SELECT COUNT(*) FROM users " +

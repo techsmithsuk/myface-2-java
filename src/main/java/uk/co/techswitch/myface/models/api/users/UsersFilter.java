@@ -3,7 +3,7 @@ package uk.co.techswitch.myface.models.api.users;
 import org.springframework.web.util.UriBuilder;
 import uk.co.techswitch.myface.models.api.Filter;
 
-public class UserFilter extends Filter {
+public class UsersFilter extends Filter {
     private String username;
     private String email;
     private String firstName;
