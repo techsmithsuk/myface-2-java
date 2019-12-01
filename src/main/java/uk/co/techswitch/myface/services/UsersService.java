@@ -78,7 +78,7 @@ public class UsersService extends DatabaseService {
         });
     }
 
-    public User updateUser(Long id, UpdateUser user) {
+    public User updateUser(long id, UpdateUser user) {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "UPDATE users SET " +
@@ -95,5 +95,13 @@ public class UsersService extends DatabaseService {
                         .execute()
         );
         return getById(id);
+    }
+
+    public void deleteUser(long id) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM users WHERE id = :id")
+                        .bind("id", id)
+                        .execute()
+        );
     }
 }

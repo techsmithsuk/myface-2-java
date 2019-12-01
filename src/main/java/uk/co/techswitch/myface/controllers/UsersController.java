@@ -44,16 +44,21 @@ public class UsersController {
         return new ModelAndView("users/details");
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public RedirectView updateUser(@PathVariable("id") long id, @ModelAttribute @Valid UpdateUser updateUser) {
-        User user = usersService.updateUser(id, updateUser);
-
-        return new RedirectView("/users/" + user.getId());
-    }
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public RedirectView createUser(@ModelAttribute @Valid CreateUser user) {
         long id = usersService.createUser(user);
         return new RedirectView("/users/" + id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public RedirectView updateUser(@PathVariable("id") long id, @ModelAttribute @Valid UpdateUser updateUser) {
+        User user = usersService.updateUser(id, updateUser);
+        return new RedirectView("/users/" + user.getId());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public RedirectView deleteUser(@PathVariable("id") long id) {
+        usersService.deleteUser(id);
+        return new RedirectView("/users");
     }
 }
