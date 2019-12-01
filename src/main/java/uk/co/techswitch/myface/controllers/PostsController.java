@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import uk.co.techswitch.myface.models.api.posts.CreatePost;
-import uk.co.techswitch.myface.models.api.posts.PostModel;
-import uk.co.techswitch.myface.models.api.posts.PostResultsPage;
-import uk.co.techswitch.myface.models.api.posts.PostsFilter;
+import uk.co.techswitch.myface.models.api.posts.*;
 import uk.co.techswitch.myface.models.database.Post;
 import uk.co.techswitch.myface.services.DatabaseService;
 import uk.co.techswitch.myface.services.PostsService;
@@ -49,6 +46,12 @@ public class PostsController extends DatabaseService {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public RedirectView createPost(@ModelAttribute @Valid CreatePost createPost) {
         Post post = postsService.createPost(createPost);
+        return new RedirectView("/posts/" + post.getId());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public RedirectView updatePost(@PathVariable("id") long id, @ModelAttribute @Valid UpdatePost updatePost) {
+        Post post = postsService.updatePost(id, updatePost);
         return new RedirectView("/posts/" + post.getId());
     }
 }

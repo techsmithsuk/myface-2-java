@@ -3,6 +3,7 @@ package uk.co.techswitch.myface.services;
 import org.springframework.stereotype.Service;
 import uk.co.techswitch.myface.models.api.posts.CreatePost;
 import uk.co.techswitch.myface.models.api.posts.PostsFilter;
+import uk.co.techswitch.myface.models.api.posts.UpdatePost;
 import uk.co.techswitch.myface.models.database.Post;
 
 import java.util.Date;
@@ -76,6 +77,25 @@ public class PostsService extends DatabaseService {
                 }
         );
 
+        return getById(id);
+    }
+
+    public Post updatePost(Long id, UpdatePost updatePost) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "UPDATE posts SET " +
+                                "sender = :sender, " +
+                                "message = :message, " +
+                                "image_url = :imageUrl, " +
+                                "timestamp = :timestamp " +
+                                "WHERE id = :id")
+                        .bind("id", id)
+                        .bind("senderId", updatePost.getSender())
+                        .bind("message", updatePost.getMessage())
+                        .bind("imageUrl", updatePost.getImageUrl())
+                        .bind("timestamp", updatePost.getTimestamp())
+                        .execute()
+        );
         return getById(id);
     }
 }

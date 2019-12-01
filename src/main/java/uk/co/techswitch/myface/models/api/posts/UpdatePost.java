@@ -1,14 +1,18 @@
 package uk.co.techswitch.myface.models.api.posts;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
-public class CreatePost {
+public class UpdatePost {
     @NotNull
     private Long sender;
     @NotBlank
     private String message;
     private String imageUrl;
+    private Date timestamp;
 
     public long getSender() {
         return sender;
@@ -32,5 +36,14 @@ public class CreatePost {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    @DateTimeFormat(pattern = PostModel.DATE_PATTERN)
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
