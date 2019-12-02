@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import uk.co.techswitch.myface.models.api.ResultsPage;
+import uk.co.techswitch.myface.models.api.ResultsPageBuilder;
 import uk.co.techswitch.myface.models.api.users.*;
 import uk.co.techswitch.myface.models.database.User;
 import uk.co.techswitch.myface.services.UsersService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -30,9 +33,14 @@ public class UsersController {
         List<User> users = usersService.searchUsers(filter);
         int numberMatchingSearch = usersService.countUsers(filter);
 
-        UserResultsPage resultsPage = new UserResultsPage(users, filter, numberMatchingSearch);
+        ResultsPage results = new ResultsPageBuilder<UserModel, UsersFilter>()
+                .withItems(users.stream().map(UserModel::new).collect(Collectors.toList()))
+                .withFilter(filter)
+                .withNumberMatchingSearch(numberMatchingSearch)
+                .withBaseUrl("/posts")
+                .build();
 
-        return new ModelAndView("users/search", "results", resultsPage);
+        return new ModelAndView("users/search", "results", results);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

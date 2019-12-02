@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import uk.co.techswitch.myface.models.api.ResultsPage;
+import uk.co.techswitch.myface.models.api.ResultsPageBuilder;
 import uk.co.techswitch.myface.models.api.posts.*;
 import uk.co.techswitch.myface.models.database.Post;
 import uk.co.techswitch.myface.services.DatabaseService;
@@ -14,6 +16,7 @@ import uk.co.techswitch.myface.services.PostsService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
@@ -29,7 +32,12 @@ public class PostsController extends DatabaseService {
         List<Post> posts = postsService.searchPosts(filter);
         int numberMatchingSearch = postsService.countPosts(filter);
 
-        PostResultsPage results = new PostResultsPage(posts, filter, numberMatchingSearch);
+        ResultsPage results = new ResultsPageBuilder<PostModel, PostsFilter>()
+                .withItems(posts.stream().map(PostModel::new).collect(Collectors.toList()))
+                .withFilter(filter)
+                .withNumberMatchingSearch(numberMatchingSearch)
+                .withBaseUrl("/posts")
+                .build();
 
         return new ModelAndView("/posts/search", "results", results);
     }

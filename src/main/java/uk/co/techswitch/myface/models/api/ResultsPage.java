@@ -6,25 +6,25 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-public abstract class ResultsPage<TItem, TFilter extends Filter> {
+public class ResultsPage<TItem, TFilter extends Filter> {
     private final List<TItem> items;
     private final TFilter filter;
-    private final int totalNumberOfItems;
+    private final int numberMatchingSearch;
+    private final String rootUrl;
 
-    public ResultsPage(List<TItem> items, TFilter filter, int totalNumberOfItems) {
+    public ResultsPage(List<TItem> items, TFilter filter, int numberMatchingSearch, String rootUrl) {
         this.items = items;
         this.filter = filter;
-        this.totalNumberOfItems = totalNumberOfItems;
+        this.numberMatchingSearch = numberMatchingSearch;
+        this.rootUrl = rootUrl;
     }
-
-    protected abstract String getRootUrl();
 
     public List<TItem> getItems() {
         return items;
     }
 
-    public int getTotalNumberOfItems() {
-        return totalNumberOfItems;
+    public int getNumberMatchingSearch() {
+        return numberMatchingSearch;
     }
 
     public URI getPreviousPage() {
@@ -41,11 +41,11 @@ public abstract class ResultsPage<TItem, TFilter extends Filter> {
     }
 
     public URI getNextPage() {
-        if (filter.getPage() * filter.getPageSize() >= totalNumberOfItems) {
+        if (filter.getPage() * filter.getPageSize() >= numberMatchingSearch) {
             return null;
         }
 
-        UriBuilder builder = UriComponentsBuilder.fromPath(getRootUrl())
+        UriBuilder builder = UriComponentsBuilder.fromPath(rootUrl)
                 .queryParam("page", filter.getPage() + 1)
                 .queryParam("pageSize", filter.getPageSize());
 
