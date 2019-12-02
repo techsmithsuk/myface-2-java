@@ -97,4 +97,12 @@ public class CommentsService extends DatabaseService {
         );
         return getById(id);
     }
+
+    public void deleteComment(long id) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM comments WHERE id = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
 }

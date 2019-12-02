@@ -64,4 +64,10 @@ public class CommentsController {
         Comment comment = commentsService.updateComment(id, updateComment);
         return new RedirectView("/comments/" + comment.getId());
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public RedirectView deleteComment(@PathVariable("id") long id) {
+        commentsService.deleteComment(id);
+        return new RedirectView("/comments");
+    }
 }
