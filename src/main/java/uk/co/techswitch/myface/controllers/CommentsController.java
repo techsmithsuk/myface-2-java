@@ -12,9 +12,11 @@ import uk.co.techswitch.myface.models.api.ResultsPageBuilder;
 import uk.co.techswitch.myface.models.api.comments.CommentsFilter;
 import uk.co.techswitch.myface.models.api.comments.CommentModel;
 import uk.co.techswitch.myface.models.api.comments.CreateComment;
+import uk.co.techswitch.myface.models.api.comments.UpdateComment;
 import uk.co.techswitch.myface.models.database.Comment;
 import uk.co.techswitch.myface.services.CommentsService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,8 +54,14 @@ public class CommentsController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView createComment(@ModelAttribute CreateComment createComment) {
+    public RedirectView createComment(@ModelAttribute @Valid CreateComment createComment) {
         Comment comment = commentsService.createComment(createComment);
+        return new RedirectView("/comments/" + comment.getId());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public RedirectView updateComment(@PathVariable("id") long id, @ModelAttribute @Valid UpdateComment updateComment) {
+        Comment comment = commentsService.updateComment(id, updateComment);
         return new RedirectView("/comments/" + comment.getId());
     }
 }

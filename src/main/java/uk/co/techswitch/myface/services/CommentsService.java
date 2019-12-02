@@ -3,6 +3,7 @@ package uk.co.techswitch.myface.services;
 import org.springframework.stereotype.Service;
 import uk.co.techswitch.myface.models.api.comments.CommentsFilter;
 import uk.co.techswitch.myface.models.api.comments.CreateComment;
+import uk.co.techswitch.myface.models.api.comments.UpdateComment;
 import uk.co.techswitch.myface.models.database.Comment;
 import uk.co.techswitch.myface.models.database.Post;
 
@@ -65,7 +66,7 @@ public class CommentsService extends DatabaseService {
     public Comment createComment(CreateComment comment) {
         long id = jdbi.withHandle(handle -> {
                     handle.createUpdate(
-                            "INSERT INTO posts " +
+                            "INSERT INTO comments " +
                                     "(sender, post, message, timestamp) " +
                                     "VALUES " +
                                     "(:sender, :post, :message, :timestamp)")
@@ -81,6 +82,19 @@ public class CommentsService extends DatabaseService {
                 }
         );
 
+        return getById(id);
+    }
+
+    public Comment updateComment(long id, UpdateComment comment) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "UPDATE comments SET " +
+                                "message = :message, " +
+                                "WHERE id = :id")
+                        .bind("id", id)
+                        .bind("message", comment.getMessage())
+                        .execute()
+        );
         return getById(id);
     }
 }
