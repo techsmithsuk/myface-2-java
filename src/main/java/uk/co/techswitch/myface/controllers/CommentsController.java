@@ -1,15 +1,17 @@
 package uk.co.techswitch.myface.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import uk.co.techswitch.myface.models.api.ResultsPage;
 import uk.co.techswitch.myface.models.api.ResultsPageBuilder;
 import uk.co.techswitch.myface.models.api.comments.CommentsFilter;
 import uk.co.techswitch.myface.models.api.comments.CommentModel;
-import uk.co.techswitch.myface.models.api.users.UserModel;
+import uk.co.techswitch.myface.models.api.comments.CreateComment;
 import uk.co.techswitch.myface.models.database.Comment;
 import uk.co.techswitch.myface.services.CommentsService;
 
@@ -47,5 +49,11 @@ public class CommentsController {
         CommentModel model = new CommentModel(comment);
 
         return new ModelAndView("/comments/detail", "commentModel", model);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public RedirectView createComment(@ModelAttribute CreateComment createComment) {
+        Comment comment = commentsService.createComment(createComment);
+        return new RedirectView("/comments/" + comment.getId());
     }
 }

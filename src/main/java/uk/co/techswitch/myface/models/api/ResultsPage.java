@@ -4,7 +4,6 @@ import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.nio.file.Path;
 import java.util.List;
 
 public class ResultsPage<TItem, TFilter extends Filter> {
