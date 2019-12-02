@@ -4,6 +4,7 @@ import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.List;
 
 public class ResultsPage<TItem, TFilter extends Filter> {
@@ -48,6 +49,10 @@ public class ResultsPage<TItem, TFilter extends Filter> {
         UriBuilder builder = UriComponentsBuilder.fromPath(rootUrl)
                 .queryParam("page", filter.getPage() + 1)
                 .queryParam("pageSize", filter.getPageSize());
+
+        if (!filter.getIds().isEmpty()) {
+            builder.queryParam("id", filter.getIds().toArray());
+        }
 
         filter.appendQueryParams(builder);
         return builder.build();
