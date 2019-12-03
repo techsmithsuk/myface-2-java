@@ -26,11 +26,11 @@ public class CommentsApiController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResultsPage<CommentModel, CommentsFilter> searchComments(CommentsFilter filter) {
+    public ResultsPage<CommentModel> searchComments(CommentsFilter filter) {
         List<Comment> comments = commentsService.searchComments(filter);
         int numberMatchingSearch = commentsService.countComments(filter);
 
-        return new ResultsPageBuilder<CommentModel, CommentsFilter>()
+        return new ResultsPageBuilder<CommentModel>()
                 .withItems(comments.stream().map(CommentModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)

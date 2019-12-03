@@ -34,7 +34,7 @@ public class CommentsController {
         List<Comment> comments = commentsService.searchComments(filter);
         int numberMatchingSearch = commentsService.countComments(filter);
 
-        ResultsPage results = new ResultsPageBuilder<CommentModel, CommentsFilter>()
+        ResultsPage results = new ResultsPageBuilder<CommentModel>()
                 .withItems(comments.stream().map(CommentModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)

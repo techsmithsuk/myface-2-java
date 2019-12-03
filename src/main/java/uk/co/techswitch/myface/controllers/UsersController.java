@@ -33,7 +33,7 @@ public class UsersController {
         List<User> users = usersService.searchUsers(filter);
         int numberMatchingSearch = usersService.countUsers(filter);
 
-        ResultsPage results = new ResultsPageBuilder<UserModel, UsersFilter>()
+        ResultsPage results = new ResultsPageBuilder<UserModel>()
                 .withItems(users.stream().map(UserModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)

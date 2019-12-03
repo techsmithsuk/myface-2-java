@@ -28,11 +28,11 @@ public class UsersApiController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResultsPage<UserModel, UsersFilter> searchUsers(UsersFilter filter) {
+    public ResultsPage<UserModel> searchUsers(UsersFilter filter) {
         List<User> users = usersService.searchUsers(filter);
         int numberMatchingSearch = usersService.countUsers(filter);
 
-        return new ResultsPageBuilder<UserModel, UsersFilter>()
+        return new ResultsPageBuilder<UserModel>()
                 .withItems(users.stream().map(UserModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)

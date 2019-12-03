@@ -28,11 +28,11 @@ public class PostsApiController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResultsPage<PostModel, PostsFilter> searchPosts(PostsFilter filter) {
+    public ResultsPage<PostModel> searchPosts(PostsFilter filter) {
         List<Post> posts = postsService.searchPosts(filter);
         int numberMatchingSearch = postsService.countPosts(filter);
 
-        return new ResultsPageBuilder<PostModel, PostsFilter>()
+        return new ResultsPageBuilder<PostModel>()
                 .withItems(posts.stream().map(PostModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)

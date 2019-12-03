@@ -6,13 +6,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-public class ResultsPage<TItem, TFilter extends Filter> {
+public class ResultsPage<TItem> {
     private final List<TItem> items;
-    private final TFilter filter;
+    private final Filter filter;
     private final int numberMatchingSearch;
     private final String rootUrl;
 
-    public ResultsPage(List<TItem> items, TFilter filter, int numberMatchingSearch, String rootUrl) {
+    public ResultsPage(List<TItem> items, Filter filter, int numberMatchingSearch, String rootUrl) {
         this.items = items;
         this.filter = filter;
         this.numberMatchingSearch = numberMatchingSearch;

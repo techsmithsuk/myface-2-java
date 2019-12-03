@@ -29,7 +29,7 @@ public class PostsController extends DatabaseService {
         List<Post> posts = postsService.searchPosts(filter);
         int numberMatchingSearch = postsService.countPosts(filter);
 
-        ResultsPage results = new ResultsPageBuilder<PostModel, PostsFilter>()
+        ResultsPage results = new ResultsPageBuilder<PostModel>()
                 .withItems(posts.stream().map(PostModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)
