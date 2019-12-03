@@ -36,7 +36,7 @@ public class PostsApiController {
                 .withItems(posts.stream().map(PostModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)
-                .withBaseUrl("/posts")
+                .withBaseUrl("/api/posts")
                 .build();
     }
 

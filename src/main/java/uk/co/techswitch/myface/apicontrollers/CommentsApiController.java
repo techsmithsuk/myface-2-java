@@ -34,7 +34,7 @@ public class CommentsApiController {
                 .withItems(comments.stream().map(CommentModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)
-                .withBaseUrl("/comments")
+                .withBaseUrl("/api/comments")
                 .build();
     }
 

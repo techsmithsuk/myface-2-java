@@ -36,7 +36,7 @@ public class UsersApiController {
                 .withItems(users.stream().map(UserModel::new).collect(Collectors.toList()))
                 .withFilter(filter)
                 .withNumberMatchingSearch(numberMatchingSearch)
-                .withBaseUrl("/posts")
+                .withBaseUrl("/api/posts")
                 .build();
     }
 
