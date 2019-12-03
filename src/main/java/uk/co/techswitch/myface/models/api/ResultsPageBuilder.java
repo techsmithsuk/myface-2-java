@@ -1,5 +1,9 @@
 package uk.co.techswitch.myface.models.api;
 
+import uk.co.techswitch.myface.models.api.comments.CommentModel;
+import uk.co.techswitch.myface.models.api.comments.CommentsFilter;
+import uk.co.techswitch.myface.models.database.Comment;
+
 import java.util.List;
 
 public class ResultsPageBuilder<TItem, TFilter extends Filter> {
@@ -28,7 +32,7 @@ public class ResultsPageBuilder<TItem, TFilter extends Filter> {
         return this;
     }
 
-    public ResultsPage build() {
-        return new ResultsPage<TItem, TFilter>(items, filter, numberMatchingSearch, baseUrl);
+    public ResultsPage<TItem, TFilter> build() {
+        return new ResultsPage<>(items, filter, numberMatchingSearch, baseUrl);
     }
 }
